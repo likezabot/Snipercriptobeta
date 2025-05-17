@@ -9,7 +9,7 @@ import { useTheme } from "next-themes"
 import { motion, useScroll } from "framer-motion"
 import { cn } from "@/lib/utils"
 
-export function Header() {
+export default function Header() {
   const { setTheme, theme } = useTheme()
   const pathname = usePathname()
   const { scrollY } = useScroll()
@@ -61,7 +61,7 @@ export function Header() {
             {navItems.map((item) => {
               const Icon = item.icon
               const isActive = pathname === item.href
-              
+
               return (
                 <Link key={item.href} href={item.href}>
                   <Button
@@ -119,7 +119,7 @@ export function Header() {
             {navItems.map((item) => {
               const Icon = item.icon
               const isActive = pathname === item.href
-              
+
               return (
                 <Link key={item.href} href={item.href}>
                   <Button
@@ -133,7 +133,7 @@ export function Header() {
                 </Link>
               )
             })}
-            
+
             <Button
               variant="ghost"
               className="w-full justify-start"

@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-  },
-  "devDependencies": {
+    "next": "^15.3.2"
   }
 }

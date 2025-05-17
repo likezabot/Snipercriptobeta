@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+    output = "/home/ubuntu/crypto_trading_tool/node_modules/.prisma/client"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Cryptocurrency {
+  id        String   @id @default(cuid())
+  symbol    String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  signals   Signal[]
+}
+
+model Signal {
+  id               String         @id @default(cuid())
+  cryptocurrency   Cryptocurrency @relation(fields: [cryptocurrencyId], references: [id])
+  cryptocurrencyId String
+  timeframe        String
+  direction        String // BUY or SELL
+  entryPrice       Float
+  stopLoss         Float?
+  takeProfit       Float?
+  confidence       Float // 0-100
+  leverage         Int
+  createdAt        DateTime       @default(now())
+  indicators       Indicator[]
+}
+
+model Indicator {
+  id        String   @id @default(cuid())
+  signal    Signal   @relation(fields: [signalId], references: [id])
+  signalId  String
+  name      String
+  value     Float
+  signal_value String?
+  createdAt DateTime @default(now())
+}
